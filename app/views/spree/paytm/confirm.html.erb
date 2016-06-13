@@ -1,0 +1,18 @@
+<h1>
+  <b>HOLDON!</b>
+  While we connect you back to merchant's site
+</h1>
+<% if @error.present? %>
+  <p class="error">
+    <%= @message %>
+  </p>
+<% end %>
+
+<script>
+
+  $(document).ready(function(){
+    setTimeout(function(){
+      window.location.replace("<%= @redirect_path %>");
+    }, 5000);
+  })
+</script>
