@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
 
   s.author    = 'Santosh Singh'
   s.email     = 'santosh.singh@freshmonk.com'
-  s.homepage  = 'https://github.com/isantoshsingh/spree_paytm'
+  s.homepage  = 'https://github.com/monika-khatri/spree_paytm'
 
   s.require_path = 'lib'
   s.requirements << 'none'
