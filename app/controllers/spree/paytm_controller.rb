@@ -13,13 +13,12 @@ module Spree
       @param_list['REQUEST_TYPE'] = payment_method.request_type
       @param_list['ORDER_ID'] = payment_method.txnid(order)
       @param_list['TXN_AMOUNT'] = order.total.to_s
-
       if(address = current_order.bill_address || current_order.ship_address)
         phone = address.phone
       end
       #if user is not loggedin, Passing phone as customer id
       cust_id = spree_current_user.nil? ? phone : spree_current_user.id
-      @param_list['CUST_ID'] = cust_id
+      @param_list['CUST_ID'] = "CUST-#{cust_id}-ORDER-#{payment_method.txnid(order)}"
       @param_list['MOBILE_NO'] = phone
       @param_list['EMAIL'] = order.email
 
@@ -35,26 +34,22 @@ module Spree
       @status = params["STATUS"]
       @orderid = params["ORDERID"]
       @order = current_order || Spree::Order.find_by(number: @orderid.split("-").last)
-      @payment = @order.payments.find_or_create_by(payment_method: payment_method)
-      @payment.amount = @order.total
-      @payment.response_code = params["RESPCODE"]
+      @payment = @order.payments.create!(payment_method: payment_method, amount: @order.total, response_code: params['RESPCODE'])
       if @status == "TXN_SUCCESS"
-        @payment.state = "completed"
-        @payment.save
         @order.next
         @message = Spree.t(:order_processed_successfully)
         @current_order = nil
         flash.notice = Spree.t(:order_processed_successfully)
         flash['order_completed'] = true
         @error = false
-        @redirect_path = "/orders/#{@order.number}"
+        @redirect_path = order_path(@order)
       else
         @payment.state = "failed"
         @payment.save
         @order.update_attributes(payment_state: "failed")
         @error = true
         @message = "There was an error processing your payment"
-        @redirect_path = "/orders/#{@order.number}"
+        @redirect_path = checkout_state_path(@order.state)
       end
     end
   end
