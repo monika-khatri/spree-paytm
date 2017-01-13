@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_paytm'
-  s.version     = '1.0.2'
+  s.version     = '1.0.3'
   s.summary     = 'Paytm integration into spree application.'
   s.description = 'Paytm integration into spree application.'
 
