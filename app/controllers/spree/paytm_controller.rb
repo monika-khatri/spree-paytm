@@ -11,7 +11,7 @@ module Spree
       @param_list['CHANNEL_ID'] = payment_method.preferred_channel_id
       @param_list['WEBSITE'] = payment_method.preferred_website
       if @param_list.values.select{ |value| value unless value.present? }.present?
-        flash.error = Spree.t('paytm.paytm_payment_failed')
+        flash[:error] = Spree.t('paytm.paytm_payment_failed')
         redirect_to checkout_state_path(order.state) and return
       else
         @param_list['REQUEST_TYPE'] = payment_method.request_type

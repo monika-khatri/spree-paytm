@@ -21,16 +21,4 @@ Gem::Specification.new do |s|
   s.requirements << 'none'
 
   s.add_dependency 'spree_core', '~> 3.0'
-
-  s.add_development_dependency 'capybara'
-  s.add_development_dependency 'coffee-rails'
-  s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'factory_girl'
-  s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rspec-rerun'
-  s.add_development_dependency 'sass-rails'
-  s.add_development_dependency 'selenium-webdriver'
-  s.add_development_dependency 'simplecov'
-  s.add_development_dependency 'pry'
 end
