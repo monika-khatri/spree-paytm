@@ -34,7 +34,16 @@ module Spree
       @status = params["STATUS"]
       @orderid = params["ORDERID"]
       @order = current_order || Spree::Order.find_by(number: @orderid.split("-").last)
-      @payment = @order.payments.create!(payment_method: payment_method, amount: @order.total, response_code: params['RESPCODE'])
+      @payment = @order.payments.create!(
+        source: Spree::PaytmCheckout.create(
+          checksum: checksum_hash,
+          order_id: @orderid,
+          txn_id: params['TXNID']
+        ),
+        payment_method: payment_method,
+        amount: @order.total,
+        response_code: params['RESPCODE']
+      )
       if @status == "TXN_SUCCESS"
         @order.next
         @message = Spree.t(:order_processed_successfully)

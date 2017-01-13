@@ -7,6 +7,10 @@ module Spree
     preference :channel_id, :string
     preference :site_url, :string
 
+    def supports?(source)
+      true
+    end
+
     def provider_class
       self
     end
@@ -23,30 +27,14 @@ module Spree
       "paytm"
     end
 
-    def support?(source)
-      true
-    end
-
-    def authorization
-      self
-    end
-
     def purchase(amount, source, gateway_options={})
       ActiveMerchant::Billing::Response.new(true, "paytm success")
-    end
-
-    def success?
-      true
     end
 
     def txnid(order)
       "#{order.id.to_s}-#{SecureRandom.random_number(100000)}-#{order.number.to_s}"
     end
 
-    def source_required?
-      false
-    end
-    
     def refund_url
       'https://' + domain + '/oltp/HANDLER_INTERNAL/REFUND'
     end
