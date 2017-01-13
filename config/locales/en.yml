@@ -1,0 +1,4 @@
+en:
+  spree:
+    paytm:
+      paytm_payment_failed: "Paytm failed. Security header is not valid"
